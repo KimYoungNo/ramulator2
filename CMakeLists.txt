@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(
-  Ramulator
+  ramulator_interface
   VERSION 2.0
   LANGUAGES CXX
 )
@@ -64,14 +64,19 @@ include_directories(${argparse_SOURCE_DIR}/include)
 message("Done configuring argparse.")
 ##################################
 
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-add_library(ramulator SHARED)
-set_target_properties(ramulator PROPERTIES
+add_library(ramulator2 SHARED)
+set_target_properties(ramulator2 PROPERTIES
   LIBRARY_OUTPUT_DIRECTORY  ${PROJECT_SOURCE_DIR}
 )
+target_include_directories(
+  ramulator2
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 target_link_libraries(
-  ramulator 
+  ramulator2
   PUBLIC yaml-cpp
   PUBLIC spdlog
 )
@@ -79,15 +84,15 @@ target_link_libraries(
 add_executable(ramulator-exe)
 target_link_libraries(
   ramulator-exe 
-  # PRIVATE -Wl,--whole-archive ramulator -Wl,--no-whole-archive 
-  PRIVATE ramulator
+  # PRIVATE -Wl,--whole-archive ramulator2 -Wl,--no-whole-archive 
+  PRIVATE ramulator2
   PRIVATE argparse
 )
 
 set_target_properties(
   ramulator-exe
   PROPERTIES 
-  OUTPUT_NAME ramulator2
+  OUTPUT_NAME ramulator
 )
 
 add_subdirectory(src)

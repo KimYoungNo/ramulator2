@@ -18,7 +18,7 @@ target_sources(
 )
 
 target_link_libraries(
-  ramulator
+  ramulator2
   PRIVATE
   ramulator-base
 )

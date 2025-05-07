@@ -8,7 +8,10 @@ add_subdirectory(dram)
 add_subdirectory(dram_controller)
 
 target_sources(
+  ramulator2
+  PRIVATE interface.cpp
+)
+target_sources(
   ramulator-exe
-  PRIVATE 
-  main.cpp
+  PRIVATE main.cpp
 )
