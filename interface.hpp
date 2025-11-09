@@ -62,13 +62,13 @@ private:
 public:
     Interface() = default;
     Interface(unsigned int memory_id, unsigned int num_channels,
-               std::string ramulator_config, std::string out,
-               int log_interval, int nbl)
+              std::string ramulator_config, std::string out,
+              int log_interval, int nbl)
         : memory_id(memory_id), num_channels(num_channels),
           config_path(ramulator_config), log_interval(log_interval), nbl(nbl)
     { this->init(); }
 
-    ~Interface();
+    ~Interface() = default;
 
     void init();
     void cycle();
@@ -89,7 +89,7 @@ public:
     { if(return_queue.empty()) return nullptr; 
       return return_queue.front(); }
 
-    bool full(int i=0) const
+    bool is_full(int i=0) const
     { return (request_queue.size()+i) >= 256; }
 };
 
